@@ -13,6 +13,7 @@
 #define KBTNTAG 123
 #define BACKALPHA 0.5
 #define ANITIME 0.2
+#define WILDTEMP 2345
 #import "UWOpenView.h"
 
 @implementation UWOpenView {
@@ -76,8 +77,7 @@
 }
 
 - (void)openBtnClicked:(UIButton *)openBtn {
-    openBtn.selected = !openBtn.selected;
-    btnIndex = openBtn.tag - KBTNTAG;
+    btnIndex = (int)(openBtn.tag - KBTNTAG);
     if (btnIndex >= _allDataSoureArray.count) {
         _listSourceArray = [NSMutableArray arrayWithArray:@[@"暂无内容"]];
     } else {
@@ -101,7 +101,7 @@
         if (openBtn.tag == touchNum) {
             openBtn.selected = NO;
             [self removeBackGroundView];
-            [touchKey setInteger:2345 forKey:@"touchKey"];
+            [touchKey setInteger:WILDTEMP forKey:@"touchKey"];
         } else {
             [self showBackgroundView];
             [touchKey setInteger:openBtn.tag forKey:@"touchKey"];
@@ -166,6 +166,8 @@
     UIButton *tempButton = [[UIButton alloc] init];
     tempButton = (UIButton *)[self viewWithTag:btnIndex + KBTNTAG];
     tempButton.selected = NO;
+    NSUserDefaults *touchKey = [NSUserDefaults standardUserDefaults];
+    [touchKey setInteger:WILDTEMP forKey:@"touchKey"];
     [tempButton setTitle:selectString forState:UIControlStateNormal];
     [self removeBackGroundView];
 
